@@ -81,12 +81,17 @@ export const CalendarEnhanced: React.FC<CalendarEnhancedProps> = ({
     setSelectionEnd(actualEnd);
   };
 
-  const handleDateMouseUp = () => {
-    setIsSelecting(false);
-    if (selectionStart && selectionEnd) {
+  const handleMouseUpGlobal = React.useCallback(() => {
+    if (isSelecting && selectionStart && selectionEnd) {
       onDateRangeSelect?.(selectionStart, selectionEnd);
     }
-  };
+    setIsSelecting(false);
+  }, [isSelecting, selectionStart, selectionEnd, onDateRangeSelect]);
+
+  React.useEffect(() => {
+    document.addEventListener('mouseup', handleMouseUpGlobal);
+    return () => document.removeEventListener('mouseup', handleMouseUpGlobal);
+  }, [handleMouseUpGlobal]);
 
   const isDateInRange = (date: Date) => {
     if (!selectionStart || !selectionEnd) return false;
@@ -187,7 +192,6 @@ export const CalendarEnhanced: React.FC<CalendarEnhancedProps> = ({
                 key={idx}
                 onMouseDown={() => isCurrentMonthDay && handleDateMouseDown(date)}
                 onMouseEnter={() => handleDateMouseEnter(date)}
-                onMouseUp={handleDateMouseUp}
                 className={`
                   aspect-square p-2 rounded-xl transition-all duration-150 relative
                   flex flex-col items-center justify-center text-sm font-semibold
