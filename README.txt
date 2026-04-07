@@ -22,16 +22,10 @@ The goal was to build something that doesn’t just work — but **feels refined
 LIVE DEMO & VIDEO WALKTHROUGH
 
 Live Application:
-[https://interactive-calendar-eight.vercel.app?_vercel_share=JBbYP46ZkHpi94NKCOTlVNM8j2vCfnSr]
-
-Example:
-https://your-calendar.vercel.app
+https://interactive-calendar-eight.vercel.app?_vercel_share=JBbYP46ZkHpi94NKCOTlVNM8j2vCfnSr
 
 Video Demonstration:
-[https://www.loom.com/share/a8d9950bd6bd4ce09a76a5ab02d85610]
-
-Example:
-https://www.loom.com/share/your-video-id
+https://www.loom.com/share/a8d9950bd6bd4ce09a76a5ab02d85610
 
 --------------------------------------------------------------------------------
 
