@@ -2,8 +2,7 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install --legacy-peer-deps",
   "outputDirectory": "dist/public",
-  "public": false,
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
