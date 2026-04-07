@@ -31,6 +31,7 @@ export const CalendarEnhanced: React.FC<CalendarEnhancedProps> = ({
   const [selectionEnd, setSelectionEnd] = useState<Date | null>(null);
   const [isSelecting, setIsSelecting] = useState(false);
   const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
+  const [draggedDate, setDraggedDate] = useState<Date | null>(null);
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
@@ -67,7 +68,7 @@ export const CalendarEnhanced: React.FC<CalendarEnhancedProps> = ({
     setIsSelecting(true);
     setSelectionStart(date);
     setSelectionEnd(date);
-    onDateSelect?.(date);
+    setDraggedDate(date);
   };
 
   const handleDateMouseEnter = (date: Date) => {
@@ -79,14 +80,22 @@ export const CalendarEnhanced: React.FC<CalendarEnhancedProps> = ({
 
     setSelectionStart(actualStart);
     setSelectionEnd(actualEnd);
+    setDraggedDate(null);
   };
 
   const handleMouseUpGlobal = React.useCallback(() => {
     if (isSelecting && selectionStart && selectionEnd) {
-      onDateRangeSelect?.(selectionStart, selectionEnd);
+      const isSameDate = isSameDay(selectionStart, selectionEnd);
+      
+      if (isSameDate && draggedDate) {
+        onDateSelect?.(selectionStart);
+      } else if (!isSameDate) {
+        onDateRangeSelect?.(selectionStart, selectionEnd);
+      }
     }
     setIsSelecting(false);
-  }, [isSelecting, selectionStart, selectionEnd, onDateRangeSelect]);
+    setDraggedDate(null);
+  }, [isSelecting, selectionStart, selectionEnd, draggedDate, onDateRangeSelect, onDateSelect]);
 
   React.useEffect(() => {
     document.addEventListener('mouseup', handleMouseUpGlobal);
